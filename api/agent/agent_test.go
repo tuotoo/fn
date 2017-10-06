@@ -131,6 +131,19 @@ func TestCallConfigurationRequest(t *testing.T) {
 		expectedEnv[k] = v
 	}
 
+	expectedEnv["FN_CALL_ID"] = model.ID
+	expectedEnv["FN_METHOD"] = method
+	expectedEnv["FN_REQUEST_URL"] = url
+
+	// do this before the "real" headers get sucked in cuz they are formatted differently
+	// also omit any 'base' vars
+	expectedHeaders := make(http.Header)
+	for k, v := range expectedEnv {
+		if _, ok := expectedBase[k]; !ok {
+			expectedHeaders.Add(k, v)
+		}
+	}
+
 	base := model.Env.Base()
 	for k, v := range expectedBase {
 		if v2 := base[k]; v2 != v {
@@ -143,20 +156,10 @@ func TestCallConfigurationRequest(t *testing.T) {
 		t.Fatal("got extra vars in base env set, add me to tests ;)", expectedBase)
 	}
 
-	expectedEnv["FN_CALL_ID"] = model.ID
-	expectedEnv["FN_METHOD"] = method
-	expectedEnv["FN_REQUEST_URL"] = url
-
-	// do this before the "real" headers get sucked in cuz they are formatted differently
-	expectedHeaders := make(http.Header)
-	for k, v := range expectedEnv {
-		expectedHeaders.Add(k, v)
-	}
-
 	// from the request headers (look different in env than in req.Header, idk, up to user anger)
 	// req headers down cases things
-	expectedEnv["Myrealheader"] = "FOOLORD, FOOPEASANT"
-	expectedEnv["Content-Length"] = contentLength
+	expectedEnv["FN_HEADER_MYREALHEADER"] = "FOOLORD, FOOPEASANT"
+	expectedEnv["FN_HEADER_CONTENT_LENGTH"] = contentLength
 
 	env := model.Env.Full()
 	for k, v := range expectedEnv {
@@ -184,7 +187,7 @@ func TestCallConfigurationRequest(t *testing.T) {
 	}
 
 	if len(expectedHeaders) > 0 {
-		t.Fatal("got extra headers, bad")
+		t.Fatal("got extra headers, bad", expectedHeaders)
 	}
 
 	if w.Header()["Fn_call_id"][0] != model.ID {
@@ -209,7 +212,7 @@ func TestCallConfigurationModel(t *testing.T) {
 	payload := "payload"
 	typ := "sync"
 	format := "default"
-	callenv := &models.CallEnv{map[string][]string{
+	callenv := &models.CallEnv{Header: map[string][]string{
 		"FN_FORMAT":   []string{format},
 		"FN_APP_NAME": []string{appName},
 		"FN_PATH":     []string{path},
@@ -218,7 +221,7 @@ func TestCallConfigurationModel(t *testing.T) {
 		"APP_VAR":     []string{"FOO"},
 		"ROUTE_VAR":   []string{"BAR"},
 		"DOUBLE_VAR":  []string{"BIZ", "BAZ"},
-	}, []string{
+	}, B: []string{
 		"FN_FORMAT",
 		"FN_APP_NAME",
 		"FN_PATH",
@@ -265,6 +268,11 @@ func TestCallConfigurationModel(t *testing.T) {
 		for _, v := range vs {
 			expectedHeaders.Add(k, v)
 		}
+	}
+
+	// base is not included in the headers
+	for _, k := range callenv.B {
+		expectedHeaders.Del(k)
 	}
 
 	for k, vs := range req.Header {
