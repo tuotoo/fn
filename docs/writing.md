@@ -1,13 +1,12 @@
-# Writing Functions
+# 编写函数
 
-This will give you the basic overview of writing base level functions. You can also use higher level
-abstractions that make it easier such as [lambda](lambda/README.md).
+这篇文档会向你介绍如何编写函数. 你也可以使用更高级的抽象比如 [lambda](lambda/README.md).
 
-Also, for complete examples in various languages, see the [examples directory](/examples).
+在[示例目录](/examples)有几种语言编写的示例.
 
-## Code
+## 代码编写
 
-The most basic code layout in any language is as follows, this is pseudo code and is not meant to run.
+大多数语言写出来的伪代码结构就像代码这样:
 
 ```ruby
 # Read and parse from STDIN
@@ -22,42 +21,39 @@ STDOUT.write(JSON.generate(return_struct))
 db.update(return_struct)
 ```
 
-## Inputs
+## 输入
 
-Inputs are provided through standard input and environment variables. We'll just talk about the default input format here, but you can find others [here](function-format.md).
-To read in the function body, just read from STDIN.
+输入有标准输入和环境变量提供. 在这里, 我们只讨论默认的输入和环境变量, 其他情况请参照[这里](function-format.md).
+直接读取 STDIN, 就可以获取到函数的请求, 其他的变量可以在以下环境变量获取:
 
-You will also have access to a set of environment variables.
-
-* `FN_REQUEST_URL` - the full URL for the request ([parsing example](https://github.com/fnproject/fn/tree/master/examples/tutorial/params))
-* `FN_APP_NAME` - the name of the application that matched this route, eg: `myapp`
-* `FN_PATH` - the matched route, eg: `/hello`
-* `FN_METHOD` - the HTTP method for the request, eg: `GET` or `POST`
-* `FN_CALL_ID` - a unique ID for each function execution.
-* `FN_FORMAT` - a string representing one of the [function formats](function-format.md), currently either `default` or `http`. Default is `default`.
-* `FN_MEMORY` - a number representing the amount of memory available to the call, in MB
-* `FN_TYPE` - the type for this call, currently 'sync' or 'async'
-* `FN_HEADER_$X` - the HTTP headers that were set for this request. Replace $X with the upper cased name of the header and replace dashes in the header with underscores.
+* `FN_REQUEST_URL` - 请求的完整 URL 路径 ([解析示例](https://github.com/fnproject/fn/tree/master/examples/tutorial/params))
+* `FN_APP_NAME` - 路由中的应用名称, 如: `myapp`
+* `FN_PATH` - 命中的路由, 如: `/hello`
+* `FN_METHOD` - 请求所用的 HTTP 方法名, 如: `GET` 或者 `POST`
+* `FN_CALL_ID` - 每个函数执行的唯一ID
+* `FN_FORMAT` - [函数格式](function-format.md)字符串, 现在只有 `default` 和 `http`. 默认是 `default`.
+* `FN_MEMORY` - 函数可以分配的内存大小, 以 MB 为单位
+* `FN_TYPE` - 函数的调用类型 'sync' 或者 'async'
+* `FN_HEADER_$X` - 请求所使用的 HTTP 头部, 将 $X 替换为全部大写的头部名称, 并将头部名称中的中划线改为下划线.
   * `$X` - any [configuration values](https://github.com/fnproject/cli/blob/master/README.md#application-level-configuration) you've set
   for the Application or the Route. Replace X with the upper cased name of the config variable you set. Ex: `minio_secret=secret` will be exposed via MINIO_SECRET env var.
-* `FN_PARAM_$Y` - any variables found from parsing the URL. Replace $Y with any `:var` from the url.
+* `FN_PARAM_$Y` - 通过URL传递的参数. 将 $Y 替换为 URL 中类似 `:var` 的参数.
 
 Warning: these may change before release.
 
-## Logging
+## 日志
 
-Standard out is where you should write response data for synchronous functions. Standard error
-is where you should write for logging, as [it was intended](http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout).
+在同步函数中, 标准输出会作为返回数据. 所以应该把日志写到标准错误输出中, 点击查看[这样做的目的](http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout).
 
-So to write output to logs, simply log to STDERR. Here are some examples in a few languages.
+所以要输出日志的话, 只要把日志写到 STDERR 就可以了. 以下是集中语言的示例.
 
-In Go, simply use the [log](https://golang.org/pkg/log/) package, it writes to STDERR by default.
+在 Go 语言中, 直接使用 [log](https://golang.org/pkg/log/) 库就可以了, 它默认就是写到标准错误输出的.
 
 ```go
 log.Println("hi")
 ```
 
-In Node.js:
+在 Node.js:
 
 ```node
 console.error("hi");
@@ -65,27 +61,25 @@ console.error("hi");
 
 [More details for Node.js here](http://stackoverflow.com/a/27576486/105562).
 
-In Ruby:
+在 Ruby:
 
 ```ruby
 STDERR.puts("hi")
 ```
 
-## Using Lambda Functions
+## 使用 Lambda 函数
 
 ### Lambda everywhere
 
-Lambda support for Fn enables you to take your AWS Lambda functions and run them
-anywhere. You should be able to take your code and run them without any changes.
+Fn 的 Lambda 支持使你可以在任何平台运行 AWS Lambda 函数, 你可以不改动代码而在 Fn 上运行.
 
-Creating Lambda functions is not much different than using regular functions, just use
-the `lambda-node` runtime.
+创建 Lambda 函数和创建普通函数是一样的, 只要加上 `lambda-node` 运行时参数就可以了.
 
 ```sh
 fn init --runtime lambda-node --name lambda-node
 ```
 
-Be sure the filename for your main handler is `func.js`.
+需要注意的是, 你的主函数必须是 `func.js`.
 
 TODO: Make Java and Python use the new workflow too.
 
