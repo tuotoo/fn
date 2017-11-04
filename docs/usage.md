@@ -1,16 +1,16 @@
-# Detailed Usage
+# 详细使用
 
-This is a more detailed explanation of the main commands you'll use in Fn as a developer.
+这篇文档介绍了开发者常用的一些命令.
 
-### Create an Application
+### 创建应用
 
-An application is essentially a grouping of functions, that put together, form an API. Here's how to create an app.
+应用本质上就是一组函数放在一起, 共同组成了 API . 使用下列命令创建应用:
 
 ```sh
 fn apps create myapp
 ```
 
-Or using a cURL:
+或者使用 cURL:
 
 ```sh
 curl -H "Content-Type: application/json" -X POST -d '{
@@ -20,20 +20,18 @@ curl -H "Content-Type: application/json" -X POST -d '{
 
 [More on apps](docs/apps.md).
 
-Now that we have an app, we can route endpoints to functions.
+创建好应用之后, 就可以通过路由访问函数了.
 
-### Add a Route
+### 添加路由
 
-A route is a way to define a path in your application that maps to a function. In this example, we'll map
-`/hello` to a simple `Hello World!` function called `fnproject/hello` which is a function we already made that you
-can use -- yes, you can share functions! The source code for this function is in the [examples directory](examples/hello/go).
-You can read more about [writing your own functions here](docs/writing.md).
+路由是在应用中所定义的路径到函数的映射. 在下面的示例中, 我们会将 `/hello` 映射到一个我们之前上传的 `fnproject/hello` 的 `Hello World!` 函数上 -- 是的, 你可以把写好的函数共享出来. 这个函数的代码在[examples directory](examples/hello/go).
+点击[编写函数](docs/writing.md)查看更多.
 
 ```sh
 fn routes create myapp /hello -i fnproject/hello
 ```
 
-Or using cURL:
+或者使用 cURL:
 
 ```sh
 curl -H "Content-Type: application/json" -X POST -d '{
@@ -44,36 +42,35 @@ curl -H "Content-Type: application/json" -X POST -d '{
 }' http://localhost:8080/v1/apps/myapp/routes
 ```
 
-[More on routes](docs/routes.md).
+[关于路由](docs/routes.md).
 
-### Calling your Function
+### 调用函数
 
-Calling your function is as simple as requesting a URL. Each app has its own namespace and each route mapped to the app.
-The app `myapp` that we created above along with the `/hello` route we added would be called via the following
-URL: http://localhost:8080/r/myapp/hello
+调用函数就跟请求 URL 一样简单. 每个应用都有自己的命名空间, 每个路由也都映射到了应用上.
+比如, 我们上边在应用 `myapp` 中创建的 `/hello` 路由就可以通过这个 URL 调用:
+ http://localhost:8080/r/myapp/hello
 
-Either surf to it in your browser or use `fn`:
+可以用浏览器直接访问或者使用 `fn` 来调用:
 
 ```sh
 fn call myapp /hello
 ```
 
-Or using a cURL:
+或者通过 cURL 调用:
 
 ```sh
 curl http://localhost:8080/r/myapp/hello
 ```
 
-### Passing data into a function
+### 向函数传递数据
 
-Your function will get the body of the HTTP request via STDIN, and the headers of the request will be passed in
-as env vars. You can test a function with the CLI tool:
+函数可以在 STDIN 中获取 HTTP 请求的 body, 而请求的头部信息则在环境变量里面, 你可以使用命令行工具对函数进行测试: 
 
 ```sh
 echo '{"name":"Johnny"}' | fn call myapp /hello
 ```
 
-Or using cURL:
+或者使用 cURL:
 
 ```sh
 curl -H "Content-Type: application/json" -X POST -d '{
@@ -81,20 +78,18 @@ curl -H "Content-Type: application/json" -X POST -d '{
 }' http://localhost:8080/r/myapp/hello
 ```
 
-You should see it say `Hello Johnny!` now instead of `Hello World!`.
+现在返回的信息就应该是 `Hello Johnny!` 而不是 `Hello World!` 了.
 
-### Add an asynchronous function
+### 添加异步函数
 
-FN supports synchronous function calls like we just tried above, and asynchronous for background processing.
+我们在上面所使用的是 FN 的同步函数, 而 Fn 也支持异步函数用于后台处理.
 
-[Asynchronous functions](async.md) are great for tasks that are CPU heavy or take more than a few seconds to complete.
-For instance, image processing, video processing, data processing, ETL, etc.
-Architecturally, the main difference between synchronous and asynchronous is that requests
-to asynchronous functions are put in a queue and executed on upon resource availability so that they do not interfere with the fast synchronous responses required for an API.
-Also, since it uses a message queue, you can queue up millions of function calls without worrying about capacity as requests will
-just be queued up and run at some point in the future.
+[异步函数](async.md) 用于比较耗 CPU 或者耗时比较长的任务处理.
+比如: 图片处理, 视频处理, 数据处理, ETL 等.
+架构上, 同步和异步的主要区别是, 异步函数会放在一个队列里面, 当资源可用的时候才去执行, 这样的话就不会对需要快速响应的同步 API 造成干扰.
+另外, 由于异步函数使用了消息队列, 所以你可以在队列里面放上百万个函数调用而不用担心容量问题.
 
-To add an asynchronous function, create another route with the `"type":"async"`, for example:
+只要添加一个 `"type":"async"` 的路由就完成异步路由的添加了, 例如:
 
 ```sh
 curl -H "Content-Type: application/json" -X POST -d '{
@@ -106,9 +101,9 @@ curl -H "Content-Type: application/json" -X POST -d '{
 }' http://localhost:8080/v1/apps/myapp/routes
 ```
 
-or set `type: async` in your `func.yaml`.
+或者在 `func.yaml` 中设置 `type: async` .
 
-Now if you request this route:
+现在你请求这个路由的时候:
 
 ```sh
 curl -H "Content-Type: application/json" -X POST -d '{
@@ -116,14 +111,14 @@ curl -H "Content-Type: application/json" -X POST -d '{
 }' http://localhost:8080/r/myapp/hello-async
 ```
 
-You will get a `call_id` in the response:
+在返回结果会得到一个 `call_id` :
 
 ```json
 {"call_id":"572415fd-e26e-542b-846f-f1f5870034f2"}
 ```
 
-If you watch the logs, you will see the function actually runs in the background:
+如果你查看日志, 你会看到函数实际上在后台运行了:
 
 ![async log](docs/assets/async-log.png)
 
-Read more on [logging](docs/logging.md).
+查看更多关于 [日志](docs/logging.md) 的内容.
