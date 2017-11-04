@@ -1,10 +1,10 @@
-# Testing Functions
+# 测试函数
 
-`fn` has testing built in that allows you to create inputs and expected outputs and verify the expected output with actual output. 
+`fn` 内置了测试机制, 它可以创建一些输入和预期的输出, 以验证预期输出和实际输出.
 
-## Write a Test File
+## 编写测试文件
 
-Create a file called `test.json` in your functions directory (beside your `func.yaml` file). Here's a simple example:
+在函数目录中创建一个 `test.json` 文件 (和 `func.yaml` 文件同一级目录). 例如:
 
 ```json
 {
@@ -35,7 +35,7 @@ Create a file called `test.json` in your functions directory (beside your `func.
 }
 ```
 
-The example above has two tests, one with the following input:
+上面的例子写了两个测试, 一个输入以下内容:
 
 ```json
 {
@@ -43,9 +43,9 @@ The example above has two tests, one with the following input:
 }
 ```
 
-and a second one with no input. 
+第二个测试没有输入内容.
 
-The first one is expected to return a json response with the following:
+第一个测试期望得到下面的 JSON 响应:
 
 ```json
 {
@@ -53,7 +53,7 @@ The first one is expected to return a json response with the following:
 }
 ```
 
-And the second should return:
+第二个则会返回:
 
 ```json
 {
@@ -61,17 +61,15 @@ And the second should return:
 }
 ```
 
-## Run Tests
+## 运行测试
 
-This is simply running:
+直接在函数目录中运行:
 
 ```sh
 fn test
 ```
 
-in your function directory. 
-
-You can also test against a remote `fn` server by using the `--remote` flag. eg:
+你也可以在加上 `--remote` 参数, 一个远程的 `fn` 服务器上测试. 例如:
 
 ```sh
 fn test --remote myapp

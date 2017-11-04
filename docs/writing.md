@@ -43,7 +43,7 @@ Warning: these may change before release.
 
 ## 日志
 
-在同步函数中, 标准输出会作为返回数据. 所以应该把日志写到标准错误输出中, 点击查看[这样做的目的](http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout).
+在同步函数中, 标准输出会作为响应数据. 所以应该把日志写到标准错误输出中, 点击查看[这样做的目的](http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout).
 
 所以要输出日志的话, 只要把日志写到 STDERR 就可以了. 以下是集中语言的示例.
 
@@ -83,6 +83,6 @@ fn init --runtime lambda-node --name lambda-node
 
 TODO: Make Java and Python use the new workflow too.
 
-## Next Steps
+## 下一步
 
-* [Packaging your function](packaging.md)
+* [打包函数](packaging.md)
