@@ -1,21 +1,17 @@
 # Frequently Asked Questions
 
-## Which languages are supported?
+## 支持哪些语言?
 
-Since we use containers as the base building block, all languages can be used. There may not be higher level
-helper libraries like our Lambda wrapper for every language, but you can use any language if you follow the
-base [function format](function-format.md).
+因为我们使用容器作为基础构建快, 所有所有的语言都是兼容的. 虽然不是所有语言都有类似我们的 Lambda 高层级的辅助库, 但是如果遵从[函数格式](function-format.md)的话, 任何语言都是可以使用的.
 
-## Where can I run Fn?
+## Fn 可以在哪里运行?
 
-Anywhere. Any cloud, on-premise, on your laptop. As long as you can run a Docker container, you can run Fn.
+只要可以运行 Docker 容器的地方都可以运行.
 
-## Which orchestration tools does functions support?
+## 函数支持那些业务流程工具?
 
-Functions can be deployed using any orchestration tool.
+函数可以使用任何流程工具进行部署.
 
-## Does Fn require Docker?
+## Fn 依赖 Docker 吗?
 
-For now we require Docker primarily for the packaging and distribution via Docker Registries,
-but we've built Functions in a way that abstracts the container technology so we can support others as
-needed. For instance, we may add rkt support.
+虽然现在我们主要通过 Docker Registries 进行打包和分发, 但是函数是收件在抽象的容器技术上面的, 所以未来可以支持其他的容器技术. 最近的话, 我们有可能会添加 rkt 支持.

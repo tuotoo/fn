@@ -1,17 +1,15 @@
 # Lambda everywhere
 
-Lambda support for Fn enables you to take your AWS Lambda functions and run them
-anywhere. You should be able to take your code and run them without any changes.
+Fn 的 Lambda 支持使得你可以在任何地方运行 AWS Lambda 函数.你可以无需任何修改的运行你的代码.
 
-## Creating Lambda Functions
+## 创建 Lambda 函数
 
-Creating Lambda functions is not much different than using regular functions, just use
-the `lambda-node-4` runtime.
+创建 Lambda 函数和创建普通函数一样, 只要加上 `lambda-node-4` 运行时就可以了.
 
 ```sh
 fn init --runtime lambda-node-4 --name lambda-node
 ```
 
-Be sure the filename for your main handler is `func.js`.
+你的主文件必须是 `func.js`
 
 TODO: Make Java and Python use the new workflow too.

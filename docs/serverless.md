@@ -1,35 +1,29 @@
-# What is Serverless/FaaS?
+# 什么是 Serverless/FaaS?
 
-Serverless is a new paradigm in computing that enables simplicity, efficiency and scalability for both developers
-and operators. It's important to distinguish the two, because the benefits differ:
+Serverless 是一种可以为开发者和运维人员提供简单、高效、可扩展的新型架构范式. 区别开这两个角色是很重要的， 因为这种架构对于他们的好处是不同的：
 
-## Benefits for developers
+## 对于开发者
 
-The main benefits that most people refer to are on the developer side and they include:
+对大多数人来说, 主要面向开发者的好处有::
 
-* No servers to manage (serverless) -- you just upload your code and the platform deals with the infrastructure
-* Super simple coding -- no more monoliths! Just simple little bits of code
-* Pay by the milliseconds your code is executing -- unlike a typical application that runs 24/7, and you're paying
-  24/7, functions only run when needed
+* 不需要管理服务器(serverless), 只需要上传代码就可以了, serverless会处理底层架构相关的东西
+* 编码超级简单, 只需要少量的代码便可以实现需要的功能
+* 启动执行代码的成本是毫秒级的, 不需要全天候 24/7 小时运行, 每个功能都只在需要的时候才运行, 极大降低成本
 
-Since you'll be running Fn yourself, the paying part may not apply, but it does apply to
-cost savings on your infrastructure bills as you'll read below.
+因为你只在本地运行 Fn, 你可能注意不到节省下来的在基础设置上运维成本, 那么请你往下看
 
-## Benefits for operators
+## 对于运维
 
-If you will be operating Fn (the person who has to manage the servers behind the serverless),
-then the benefits are different, but related.
+如果你负责Fn的运维(负责serverless服务的服务器的维护), 那么好处是不一样的, 但也是相关联的:
 
-* Extremely efficient use of resources
-  * Unlike an app/API/microservice that consumes resources 24/7 whether they
-    are in use or not, functions are time sliced across your infrastructure and only consume resources while they are
-    actually doing something
-* Easy to manage and scale
-  * Single system for code written in any language or any technology
-  * Single system to monitor
-  * Scaling is the same for all functions, you don't scale each app independently
-  * Scaling is simply adding more Fn nodes
+* 极大减少资源占用
+  * 不像 app/API/微服务 那样不管有没有在使用都需要 24/7 小时的占用资源, 服务在基础设施上只有运行的时候才会占用资源
+* 方便管理和扩展
+  * 可以用任何语言或者任何技术编写代码去维护单个系统
+  * 只需要监控单个系统
+  * 对于整个系统的扩容, 不需要单独扩容每个应用
+  * 扩容只需要简单的添加更多的 Fn 节点
 
-There is a lot more reading you can do on the topic, just search for 
-["what is serverless"](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=what%20is%20serverless)
-and you'll find plenty of information.
+只要搜索
+["什么是 serverless"](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=what%20is%20serverless)
+便可以获得相关的更多信息.

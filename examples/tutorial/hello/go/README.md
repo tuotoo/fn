@@ -1,33 +1,33 @@
 # Tutorial 1: Go Function w/ Input (3 minutes)
 
-This example will show you how to test and deploy Go (Golang) code to Fn. It will also demonstrate passing data in through stdin.
+这个例子将告诉你如何测试和部署 Go 代码到 Fn. 它还会演示如何通过 stdin 传输数据.
 
-### First, run the following commands:
+### 首先, 运行下列命令:
 
 ```sh
-# Initialize your function creating a func.yaml file
+# 初始化函数, 并创建 func.yaml 文件
 fn init --name hello-go
 
-# Test your function. This will run inside a container exactly how it will on the server
+# 测试函数的效果. 会在一个函数中运行, 就像在服务器中所表现的一样
 fn run
 
-# Now try with an input
+# 现在试试用 stdin 输入下数据
 cat sample.payload.json | fn run
 
-# Deploy your functions to the Fn server (default localhost:8080)
-# This will create a route to your function as well
+# 把函数部署到 Fn 服务器上 (默认是 localhost:8080)
+# 同时也会创建一个到该函数的路由
 fn deploy --app myapp
 ```
 
-### Now call your function:
+### 现在调用上面的函数:
 
 ```sh
 curl http://localhost:8080/r/myapp/hello-go
 ```
 
-Or call from a browser: [http://localhost:8080/r/myapp/go](http://localhost:8080/r/myapp/hello-go)
+或者在浏览器打开: [http://localhost:8080/r/myapp/go](http://localhost:8080/r/myapp/hello-go)
 
-And now with the JSON input:
+再试试输入 JSON 数据:
 
 ```sh
 curl -H "Content-Type: application/json" -X POST -d @sample.payload.json http://localhost:8080/r/myapp/hello-go
@@ -35,32 +35,32 @@ curl -H "Content-Type: application/json" -X POST -d @sample.payload.json http://
 
 That's it!
 
-### Note on Dependencies
+### 关于依赖
 
-In Go, simply put them all in the `vendor/` directory.
+对于 Go 程序, 直接把依赖放到 `vendor/` 目录就可以了.
 
 # In Review
 
-1. We piped JSON data into the function at the command line
+1. 我们在命令行通过管道的方式将 JSON 数据传给函数
     ```sh
     cat sample.payload.json | fn run
     ```
 
-2. We received our function input through **stdin**
+2. 我们在函数中通过 **stdin** 接收输入
     ```go
     json.NewDecoder(os.Stdin).Decode(p)
     ```
 
-3. We wrote our output to **stdout**
+3. 我们将输出写到 **stdout**
     ```go
     fmt.Printf("Hello")
     ```
 
-4. We sent **stderr** to the server logs
+4. 我们将 **stderr** 发送到系统日志
     ```go
     log.Println("here")
     ```
 
 
-# Next Up
-## [Part 2: Input Parameters](../../params)
+# 接下来
+## [第二部分: 输入参数](../../params)

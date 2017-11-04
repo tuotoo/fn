@@ -1,13 +1,13 @@
 
-# Tutorial Series
+# 教程系列
 
-Welcome to the Fn Tutorial Series, the best way to get started with Fn and serverless computing. In the following tutorials, we'll gradually introduce many of the key features of Fn.
+欢迎来到 Fn 教程系列, 这是学习使用 Fn 和 Serverless 的最佳方式. 在下面的教程中, 我们会逐步介绍 Fn 的主要功能.
 
 ## Guided Tour
 
-### Part 1
+### 第一部分
 
-Learn the basics about sending data into your function. Choose your language:
+了解最基础的功能: 将数据发送到您的函数. 选择你的语言:
 
 * [go](hello/go)
 * [java](hello/java)
@@ -17,15 +17,15 @@ Learn the basics about sending data into your function. Choose your language:
 * [ruby](hello/ruby)
 * [rust](hello/rust) 
 
-### Part 2
+### 第二部分
 
-Learn how to get parameters from a web request. [Click here](params)
+[点击这里](params)了解如何从 Web 请求中获取参数.
 
-### Part 3
+### 第三部分
 
-Write your first HotFunction (stays alive to minimize latency between requests). [Click here](https://github.com/fnproject/fn/tree/master/examples/formats)
+[点击这里](https://github.com/fnproject/fn/tree/master/examples/formats)编写你的第一个热函数(持续运行, 以最小化请求间的延迟).
 
-## Other Tutorials
+## 其他教程
 
-* [Introduction to Fn](https://github.com/fnproject/tutorials/tree/master/Introduction)
-* [Introduction to Java Fn](https://github.com/fnproject/tutorials/tree/master/JavaFDKIntroduction)
+* [Fn 简介](https://github.com/fnproject/tutorials/tree/master/Introduction)
+* [JAVA Fn简介](https://github.com/fnproject/tutorials/tree/master/JavaFDKIntroduction)
